@@ -21,5 +21,10 @@ ENV N8N_BASIC_AUTH_ACTIVE=true
 ENV N8N_BASIC_AUTH_USER=$USERNAME
 ENV N8N_BASIC_AUTH_PASSWORD=$PASSWORD
 ENV N8N_WEBHOOK_URL=$WEBHOOK
+# Copy custom nodes to the container
+COPY . /home/node/.n8n/custom
+
+# Set the environment variable for custom extensions
+ENV N8N_CUSTOM_EXTENSIONS="/home/node/.n8n/custom"
 
 CMD ["n8n", "start"]
