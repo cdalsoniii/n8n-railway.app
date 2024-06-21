@@ -46,6 +46,14 @@ Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/
 
 [MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md]
 
+
+Tudulabs/n8n3
+
+Disconnect
+Add Root Directory (used for build and deploy steps. Docs↗)
+Upstream Repo
+
+
 digital ocean 
 username
  - cdalson

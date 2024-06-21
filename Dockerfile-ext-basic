@@ -20,18 +20,11 @@ ENV DB_POSTGRESDB_PASSWORD=$PGPASSWORD
 ENV N8N_BASIC_AUTH_ACTIVE=true
 ENV N8N_BASIC_AUTH_USER=$USERNAME
 ENV N8N_BASIC_AUTH_PASSWORD=$PASSWORD
-ENV N8N_WEBHOOK_URL=$WEBHOOK_URL
-
+ENV N8N_WEBHOOK_URL=$WEBHOOK
 # Copy custom nodes to the container
-COPY ./nodes /home/node/.n8n/custom/nodes
-COPY ./credentials /home/node/.n8n/custom/credentials
+COPY . /home/node/.n8n/custom
 
 # Set the environment variable for custom extensions
 ENV N8N_CUSTOM_EXTENSIONS="/home/node/.n8n/custom"
-
-# Ensure the docker-entrypoint.sh script is executable
-RUN chmod +x /docker-entrypoint.sh
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["n8n", "start"]
