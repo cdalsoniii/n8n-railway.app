@@ -26,13 +26,18 @@ ENV N8N_WEBHOOK_URL=$WEBHOOK_URL
 COPY ./nodes /home/node/.n8n/custom/nodes
 COPY ./credentials /home/node/.n8n/custom/credentials
 
+# Copy the entrypoint script
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+
 # Set the environment variable for custom extensions
 ENV N8N_CUSTOM_EXTENSIONS="/home/node/.n8n/custom"
 
+# Set permissions for the entrypoint script
+USER root
 # Ensure the docker-entrypoint.sh script is executable
 RUN chmod +x /docker-entrypoint.sh
 
-#ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["n8n", "start"]
 
