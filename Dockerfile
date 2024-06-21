@@ -30,7 +30,7 @@ COPY . /app
 
 # Install dependencies and set up custom nodes
 # Switching to root user to handle permissions
-#USER root
+USER root
 
 # Install dependencies and link the custom nodes
 RUN npm install \
@@ -51,7 +51,7 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
 # Switch back to non-root user
-#USER node
+USER node
 
 # Set the environment variable for custom extensions
 ENV N8N_CUSTOM_EXTENSIONS="/home/node/.n8n/custom"
