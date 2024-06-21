@@ -32,7 +32,7 @@ ENV N8N_CUSTOM_EXTENSIONS="/home/node/.n8n/custom"
 # Ensure the docker-entrypoint.sh script is executable
 RUN chmod +x /docker-entrypoint.sh
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+#ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["n8n", "start"]
 
