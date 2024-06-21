@@ -1,4 +1,6 @@
-FROM n8nio/n8n
+#FROM n8nio/n8n
+
+FROM jbach/my-custom-n8n
 
 ARG PGPASSWORD
 ARG PGHOST
