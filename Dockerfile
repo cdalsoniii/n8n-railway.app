@@ -28,17 +28,13 @@ WORKDIR /app
 # Copy the entire repository into the container
 COPY . /app
 
-# Switch to root user to set the correct permissions
+# Install dependencies and set up custom nodes
+# Switching to root user to handle permissions
 USER root
-RUN chown -R node:node /app
 
-# Switch back to node user
-USER node
-
-# Install dependencies and console out the location of global npm packages
+# Install dependencies and link the custom nodes
 RUN npm install \
     && npm install -g n8n \
-    && npm list -g \
     && npm link \
     && npm list -g \
     && cd $(npm root -g)/n8n \
@@ -51,12 +47,14 @@ COPY ./credentials /home/node/.n8n/custom/credentials
 # Copy the entrypoint script
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
+# Set permissions for the entrypoint script
+RUN chmod +x /docker-entrypoint.sh
+
+# Switch back to non-root user
+USER node
+
 # Set the environment variable for custom extensions
 ENV N8N_CUSTOM_EXTENSIONS="/home/node/.n8n/custom"
-
-# Set permissions for the entrypoint script
-USER root
-RUN chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
