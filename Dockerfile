@@ -22,6 +22,24 @@ ENV N8N_BASIC_AUTH_USER=$USERNAME
 ENV N8N_BASIC_AUTH_PASSWORD=$PASSWORD
 ENV N8N_WEBHOOK_URL=$WEBHOOK_URL
 
+# Set the working directory
+WORKDIR /app
+
+# Copy the entire repository into the container
+COPY . /app
+
+# Link the custom node
+RUN cd /app
+
+# Install dependencies and console out the location of global npm packages
+RUN npm install \
+    && npm install -g n8n \
+    && npm list -g \
+    && npm link \
+    && npm list -g \
+    && cd $(npm root -g)/n8n \
+    && npm link /app
+
 # Copy custom nodes to the container
 COPY ./nodes /home/node/.n8n/custom/nodes
 COPY ./credentials /home/node/.n8n/custom/credentials
@@ -37,18 +55,6 @@ USER root
 # Ensure the docker-entrypoint.sh script is executable
 RUN chmod +x /docker-entrypoint.sh
 
-# Install dependencies and set up custom nodes
-WORKDIR /app
-COPY . /app
-RUN npm install \
-    && npm install -g n8n \
-    && npm list -g \
-    && npm link \
-    && npm list -g \
-    && cd $(npm root -g)/n8n \
-    && npm link n8n-node-starter
-
-# Run the entrypoint script
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["n8n", "start"]
